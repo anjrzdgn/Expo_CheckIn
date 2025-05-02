@@ -7,7 +7,6 @@ from PySide6.QtGui import QFontDatabase, QFont
 from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtCore import QUrl
 
-
 class PhoneCheckerApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -32,7 +31,7 @@ class PhoneCheckerApp(QWidget):
 
         self.dropdown = QComboBox(self)
         self.dropdown.addItems(["15-17", "17-19"])
-        self.dropdown.setGeometry(5, 690, 100, 30)  # x, y, width, height
+        self.dropdown.setGeometry(5, 690, 100, 30)
         self.dropdown.currentTextChanged.connect(self.load_data)
 
         self.input = QLineEdit(self)
@@ -88,7 +87,6 @@ class PhoneCheckerApp(QWidget):
         else:
             self.result.setText("❌ متأسفم! اسمتو پیدا نکردیم.")
             self.error_sound.play()
-
 
 app = QApplication(sys.argv)
 window = PhoneCheckerApp()
