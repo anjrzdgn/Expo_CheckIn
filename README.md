@@ -3,7 +3,7 @@
 A lightweight desktop application for checking attendee presence using mobile phone numbers and Excel files — built with PySide6 (Qt for Python).
 <p align="center">
   <img src="NF.png" alt="Not Found Screen" width="200"/>
-  <img src="F.png" alt="Found Screen" width="200"/>
+  <img src="Fr.png" alt="Found Screen" width="200"/>
 </p>
 ---
 
