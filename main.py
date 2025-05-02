@@ -1,5 +1,7 @@
 import sys
 import pandas as pd
+from PySide6.QtMultimedia import QSoundEffect
+from PySide6.QtCore import QUrl
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFontDatabase, QFont
 from PySide6.QtWidgets import (
@@ -10,6 +12,14 @@ from PySide6.QtGui import QFont, QPalette, QBrush, QPixmap
 class PhoneCheckerApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.success_sound = QSoundEffect()
+        self.success_sound.setSource(QUrl.fromLocalFile("C:/Users/Ali/Desktop/welcome.wav"))
+        self.success_sound.setVolume(0.8)
+
+        self.error_sound = QSoundEffect()
+        self.error_sound.setSource(QUrl.fromLocalFile("C:/Users/Ali/Desktop/error.wav"))
+        self.error_sound.setVolume(0.8)
+
         self.setWindowTitle("Expo Check-in")
         self.setFixedSize(1270, 720)
 
@@ -71,7 +81,7 @@ class PhoneCheckerApp(QWidget):
             self.result.setText(f"❌ Error loading file: {e}")
 
     def check_number(self):
-        number = self.input.text().strip()[1:]
+        number = self.input.text().strip()[1:]  # Remove the first character
         phone_list = self.data['Phone'].astype(str).str.strip()
 
         match = self.data[phone_list == number]
@@ -79,8 +89,10 @@ class PhoneCheckerApp(QWidget):
         if not match.empty:
             name = match.iloc[0]['Name']
             self.result.setText(f"✅ {name} عزیز، خوش اومدی!")
+            self.success_sound.play()
         else:
-            self.result.setText("❌ نتونستیم اسمتو پیدا کنیم.")
+            self.result.setText("❌ متأسفم! اسمتو پیدا نکردیم.")
+            self.error_sound.play()
 
 
 app = QApplication(sys.argv)
