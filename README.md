@@ -1,8 +1,10 @@
 # ✅ Expo Check-in App (Persian)
 
 A lightweight desktop application for checking attendee presence using mobile phone numbers and Excel files — built with PySide6 (Qt for Python).
-![App Screenshot 1](NF.png)
-![App Screenshot 2](F.png)
+<p align="center">
+  <img src="NF.png" alt="Not Found Screen" width="200"/>
+  <img src="F.png" alt="Found Screen" width="200"/>
+</p>
 ---
 
 ## 📌 What is this?
