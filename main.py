@@ -1,5 +1,7 @@
 import sys
 import pandas as pd
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFontDatabase, QFont
 from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QComboBox
 )
@@ -35,6 +37,17 @@ class PhoneCheckerApp(QWidget):
         layout.addWidget(self.button)
 
         self.result = QLabel("")
+
+
+        # Load custom Persian font
+        font_id = QFontDatabase.addApplicationFont("C:\\Users\\Ali\\Downloads\\myfont.ttf")  # Path to your .ttf file
+        family = QFontDatabase.applicationFontFamilies(font_id)[0]
+        persian_font = QFont(family, 24)  # 24 is font size, change it if needed
+
+        self.result.setFont(persian_font)
+        self.result.setAlignment(Qt.AlignCenter)
+        self.result.setStyleSheet("color: white;")  # optional: change text color
+
         layout.addWidget(self.result)
 
         self.setLayout(layout)
@@ -65,9 +78,9 @@ class PhoneCheckerApp(QWidget):
 
         if not match.empty:
             name = match.iloc[0]['Name']
-            self.result.setText(f"✅ {name}, welcome to the expo!")
+            self.result.setText(f"✅ {name} عزیز، خوش اومدی!")
         else:
-            self.result.setText("❌ We could not find your name.")
+            self.result.setText("❌ نتونستیم اسمتو پیدا کنیم.")
 
 
 app = QApplication(sys.argv)
