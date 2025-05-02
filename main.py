@@ -11,7 +11,6 @@ class PhoneCheckerApp(QWidget):
         self.setWindowTitle("Expo Check-in")
         self.setFixedSize(1270, 720)
 
-        # Background image
         palette = QPalette()
         bg = QPixmap("C:\\Users\\Ali\\Downloads\\BG.jpg")
         palette.setBrush(QPalette.Window, QBrush(bg))
@@ -23,7 +22,6 @@ class PhoneCheckerApp(QWidget):
         title.setFont(QFont("Arial", 16))
         layout.addWidget(title)
 
-        # Dropdown to select time slot
         self.dropdown = QComboBox()
         self.dropdown.addItems(["15-17", "17-19"])
         self.dropdown.currentTextChanged.connect(self.load_data)
@@ -41,7 +39,6 @@ class PhoneCheckerApp(QWidget):
 
         self.setLayout(layout)
 
-        # Load default data (based on default dropdown value)
         self.data = pd.DataFrame()
         self.load_data("15-17")
 
@@ -61,12 +58,17 @@ class PhoneCheckerApp(QWidget):
             self.result.setText(f"❌ Error loading file: {e}")
 
     def check_number(self):
-        number = self.input.text().strip()[1:]  # Remove the first character
+        number = self.input.text().strip()[1:]
         phone_list = self.data['Phone'].astype(str).str.strip()
-        if number in phone_list.values:
-            self.result.setText("✅ Welcome! Your registration is allowed.")
+
+        match = self.data[phone_list == number]
+
+        if not match.empty:
+            name = match.iloc[0]['Name']
+            self.result.setText(f"✅ {name}, welcome to the expo!")
         else:
-            self.result.setText("❌ Sorry, you can't be here.")
+            self.result.setText("❌ We could not find your name.")
+
 
 app = QApplication(sys.argv)
 window = PhoneCheckerApp()
