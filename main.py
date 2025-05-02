@@ -6,26 +6,35 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFontDatabase, QFont
 from PySide6.QtMultimedia import QSoundEffect
 from PySide6.QtCore import QUrl
+import os
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS  # This is set by PyInstaller when running the EXE
+    except AttributeError:
+        base_path = os.path.abspath(".")  # This is used during development
+
+    return os.path.join(base_path, relative_path)
 
 class PhoneCheckerApp(QWidget):
     def __init__(self):
         super().__init__()
         self.success_sound = QSoundEffect()
-        self.success_sound.setSource(QUrl.fromLocalFile("Wellcome.wav"))
+        self.success_sound.setSource(QUrl.fromLocalFile(resource_path("Wellcome.wav")))
         self.success_sound.setVolume(0.8)
 
         self.error_sound = QSoundEffect()
-        self.error_sound.setSource(QUrl.fromLocalFile("Error.wav"))
+        self.error_sound.setSource(QUrl.fromLocalFile(resource_path("Error.wav")))
         self.error_sound.setVolume(0.8)
 
         logo = QLabel()
 
         self.setWindowTitle("Expo Check-in")
         self.setFixedSize(426, 720)
-        self.setWindowIcon(QIcon("icon.ico"))
+        self.setWindowIcon(QIcon(resource_path("icon.ico")))
 
         palette = QPalette()
-        bg = QPixmap("BG2.jpg")
+        bg = QPixmap(resource_path("BG2.jpg"))
         palette.setBrush(QPalette.Window, QBrush(bg))
         self.setPalette(palette)
 
@@ -43,7 +52,7 @@ class PhoneCheckerApp(QWidget):
         self.input.returnPressed.connect(self.button.click)
 
         self.result = QLabel("")
-        font_id = QFontDatabase.addApplicationFont(r"Vazir-Black.ttf")
+        font_id = QFontDatabase.addApplicationFont(resource_path("Vazir-Black.ttf"))
         family = QFontDatabase.applicationFontFamilies(font_id)[0]
         persian_font = QFont(family, 21)
 
@@ -59,9 +68,9 @@ class PhoneCheckerApp(QWidget):
 
     def load_data(self, time_slot):
         if time_slot == "15-17":
-            path = "15.17.xlsx"
+            path = resource_path("15.17.xlsx")
         elif time_slot == "17-19":
-            path = "17.19.xlsx"
+            path = resource_path("17.19.xlsx")
         else:
             self.result.setText("⚠️ Unknown time slot selected.")
             return
