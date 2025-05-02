@@ -33,8 +33,9 @@ class PhoneCheckerApp(QWidget):
         self.data = pd.read_excel("registered.xlsx")
 
     def check_number(self):
-        number = self.input.text()
-        if number in self.data['Phone'].astype(str).values:
+        number = self.input.text().strip()[1:]  # Remove the first character
+        phone_list = self.data['Phone'].astype(str).str.strip()
+        if number in phone_list.values:
             self.result.setText("✅ Welcome! Your registration is allowed.")
         else:
             self.result.setText("❌ Sorry, you can't be here.")
